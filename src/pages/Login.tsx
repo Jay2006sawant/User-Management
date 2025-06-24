@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Box, Typography, CircularProgress, Alert } from '@mui/material';
 import { login } from '../store/authSlice';
-import { AppDispatch, RootState } from '../store';
+import type { AppDispatch, RootState } from '../store';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginFormInputs {
   email: string;
@@ -12,8 +13,15 @@ interface LoginFormInputs {
 
 const Login: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, error } = useSelector((state: RootState) => state.auth);
+  const { loading, error, token } = useSelector((state: RootState) => state.auth);
   const { register, handleSubmit } = useForm<LoginFormInputs>();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (token) {
+      navigate('/dashboard');
+    }
+  }, [token, navigate]);
 
   const onSubmit = (data: LoginFormInputs) => {
     dispatch(login(data));

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../store';
+import type { RootState, AppDispatch } from '../store';
 import { fetchTenants } from '../store/tenantSlice';
 import { Box, Typography, Button, CircularProgress, Alert } from '@mui/material';
 import AddTenantDialog from '../components/molecules/AddTenantDialog';

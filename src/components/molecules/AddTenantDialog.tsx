@@ -3,7 +3,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, G
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { addTenant } from '../../store/tenantSlice';
-import { AppDispatch } from '../../store';
+import type { AppDispatch } from '../../store';
 
 interface AddTenantDialogProps {
   open: boolean;
@@ -38,31 +38,31 @@ const AddTenantDialog: React.FC<AddTenantDialogProps> = ({ open, onClose }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField label="Name" fullWidth {...register('name', { required: true })} />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField label="Email" fullWidth {...register('email', { required: true })} />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField label="Phone" fullWidth {...register('phone')} />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField label="Website" fullWidth {...register('website')} />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField label="Industry" fullWidth {...register('industry')} />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField label="Annual Revenue" fullWidth {...register('annual_revenue')} />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField label="Employee Count" type="number" fullWidth {...register('employee_count')} />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField label="Logo URL" fullWidth {...register('logo_url')} />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField label="Description" fullWidth multiline rows={2} {...register('description')} />
             </Grid>
           </Grid>
