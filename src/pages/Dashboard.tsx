@@ -5,7 +5,7 @@ const Dashboard: React.FC = () => (
   <div>
     <Typography variant="h4" gutterBottom>Dashboard</Typography>
     <Grid container spacing={2}>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid size={{ xs: 12, sm: 6, md: 3 }}>
         <Card>
           <CardContent>
             <Typography variant="h6">Total Users</Typography>
@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => (
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid size={{ xs: 12, sm: 6, md: 3 }}>
         <Card>
           <CardContent>
             <Typography variant="h6">Active Tenants</Typography>
@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => (
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid size={{ xs: 12, sm: 6, md: 3 }}>
         <Card>
           <CardContent>
             <Typography variant="h6">Organizations</Typography>
@@ -29,7 +29,7 @@ const Dashboard: React.FC = () => (
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid size={{ xs: 12, sm: 6, md: 3 }}>
         <Card>
           <CardContent>
             <Typography variant="h6">Roles</Typography>
