@@ -4,7 +4,9 @@ import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
 import { Provider } from 'react-redux';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import Login from './pages/Login';
 import store from './store';
+import ProtectedRoute from './components/organisms/ProtectedRoute';
 
 const theme = createTheme();
 
@@ -14,7 +16,15 @@ const App: React.FC = () => (
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
