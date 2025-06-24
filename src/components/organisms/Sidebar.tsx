@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
+import { Drawer, List, ListItemIcon, ListItemText, Toolbar, ListItemButton } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import BusinessIcon from '@mui/icons-material/Business';
 import ApartmentIcon from '@mui/icons-material/Apartment';
@@ -35,8 +35,7 @@ const Sidebar: React.FC = () => {
       <Toolbar />
       <List>
         {navItems.map((item) => (
-          <ListItem
-            button
+          <ListItemButton
             key={item.text}
             component={Link}
             to={item.path}
@@ -44,7 +43,7 @@ const Sidebar: React.FC = () => {
           >
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.text} />
-          </ListItem>
+          </ListItemButton>
         ))}
       </List>
     </Drawer>

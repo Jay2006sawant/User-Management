@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-
-// Placeholder reducer
-const rootReducer = (state = {}, action: any) => state;
+import authReducer from './authSlice';
+import tenantReducer from './tenantSlice';
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    auth: authReducer,
+    tenants: tenantReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

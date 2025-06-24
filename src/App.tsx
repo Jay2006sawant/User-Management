@@ -2,10 +2,10 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
 import { Provider } from 'react-redux';
-import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Tenants from './pages/Tenants';
 import store from './store';
 import ProtectedRoute from './components/organisms/ProtectedRoute';
 import MainLayout from './components/templates/MainLayout';
@@ -33,17 +33,17 @@ const App: React.FC = () => (
               </ProtectedRoute>
             }
           />
-          {/* Placeholder routes for sidebar navigation */}
           <Route
             path="/tenants"
             element={
               <ProtectedRoute>
                 <MainLayout>
-                  <div>Tenants Page (Coming Soon)</div>
+                  <Tenants />
                 </MainLayout>
               </ProtectedRoute>
             }
           />
+          {/* Placeholder routes for sidebar navigation */}
           <Route
             path="/organizations"
             element={
