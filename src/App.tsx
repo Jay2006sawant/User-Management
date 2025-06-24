@@ -12,6 +12,8 @@ import MainLayout from './components/templates/MainLayout';
 import Users from './pages/Users';
 import Roles from './pages/Roles';
 import Organizations from './pages/Home';
+import Privileges from './pages/Privileges';
+
 
 const theme = createTheme();
 
@@ -82,7 +84,7 @@ const App: React.FC = () => (
             element={
               <ProtectedRoute>
                 <MainLayout>
-                  <div>Privileges Page (Coming Soon)</div>
+                  <Privileges />
                 </MainLayout>
               </ProtectedRoute>
             }
