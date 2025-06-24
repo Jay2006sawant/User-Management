@@ -9,6 +9,9 @@ import Tenants from './pages/Tenants';
 import store from './store';
 import ProtectedRoute from './components/organisms/ProtectedRoute';
 import MainLayout from './components/templates/MainLayout';
+import Users from './pages/Users';
+import Roles from './pages/Roles';
+import Organizations from './pages/Home';
 
 const theme = createTheme();
 
@@ -49,7 +52,7 @@ const App: React.FC = () => (
             element={
               <ProtectedRoute>
                 <MainLayout>
-                  <div>Organizations Page (Coming Soon)</div>
+                  <Organizations />
                 </MainLayout>
               </ProtectedRoute>
             }
@@ -59,7 +62,7 @@ const App: React.FC = () => (
             element={
               <ProtectedRoute>
                 <MainLayout>
-                  <div>Users Page (Coming Soon)</div>
+                  <Users />
                 </MainLayout>
               </ProtectedRoute>
             }
@@ -69,7 +72,7 @@ const App: React.FC = () => (
             element={
               <ProtectedRoute>
                 <MainLayout>
-                  <div>Roles Page (Coming Soon)</div>
+                  <Roles />
                 </MainLayout>
               </ProtectedRoute>
             }
