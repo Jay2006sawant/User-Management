@@ -28,6 +28,12 @@ export interface User {
   role: string;
 }
 
+export interface Role {
+  id: string;
+  name: string;
+  description: string;
+}
+
 const mockUser = {
   name: 'Admin User',
   email: 'admin@example.com',
@@ -60,6 +66,12 @@ let users: User[] = [
   { id: 'user-1', name: 'Alice Smith', email: 'alice@example.com', role: 'Admin' },
   { id: 'user-2', name: 'Bob Johnson', email: 'bob@example.com', role: 'User' },
   { id: 'user-3', name: 'Charlie Lee', email: 'charlie@example.com', role: 'Manager' },
+];
+
+let roles: Role[] = [
+  { id: 'role-1', name: 'Admin', description: 'Full access to all features' },
+  { id: 'role-2', name: 'User', description: 'Standard user access' },
+  { id: 'role-3', name: 'Manager', description: 'Manage users and tenants' },
 ];
 
 export function mockLogin({ email, password }: LoginRequest) {
@@ -165,6 +177,52 @@ export function mockDeleteUser(id: string) {
       const idx = users.findIndex((u) => u.id === id);
       if (idx === -1) return reject(new Error('User not found'));
       users.splice(idx, 1);
+      resolve({ id });
+    }, 700);
+  });
+}
+
+export function mockGetRoles() {
+  return new Promise<Role[]>((resolve) => {
+    setTimeout(() => {
+      resolve([...roles]);
+    }, 500);
+  });
+}
+
+export function mockAddRole(data: Omit<Role, 'id'>) {
+  return new Promise<Role>((resolve) => {
+    setTimeout(() => {
+      const newRole: Role = {
+        ...data,
+        id: `role-${Date.now()}`,
+      };
+      roles.push(newRole);
+      resolve(newRole);
+    }, 700);
+  });
+}
+
+export function mockEditRole(id: string, data: Partial<Omit<Role, 'id'>>) {
+  return new Promise<Role>((resolve, reject) => {
+    setTimeout(() => {
+      const idx = roles.findIndex((r) => r.id === id);
+      if (idx === -1) return reject(new Error('Role not found'));
+      roles[idx] = {
+        ...roles[idx],
+        ...data,
+      };
+      resolve(roles[idx]);
+    }, 700);
+  });
+}
+
+export function mockDeleteRole(id: string) {
+  return new Promise<{ id: string }>((resolve, reject) => {
+    setTimeout(() => {
+      const idx = roles.findIndex((r) => r.id === id);
+      if (idx === -1) return reject(new Error('Role not found'));
+      roles.splice(idx, 1);
       resolve({ id });
     }, 700);
   });
