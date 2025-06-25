@@ -4,6 +4,7 @@ import tenantReducer from './tenantSlice';
 import userReducer from './userSlice';
 import roleReducer from './roleSlice';
 import privilegeReducer from './privilegeSlice';
+import legalEntityReducer from './legalEntitySlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     users: userReducer,
     roles: roleReducer,
     privileges: privilegeReducer,
+    legalEntities: legalEntityReducer,
   },
 });
 

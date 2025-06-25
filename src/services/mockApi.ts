@@ -40,6 +40,13 @@ export interface Privilege {
   description: string;
 }
 
+export interface LegalEntity {
+  id: string;
+  name: string;
+  type: string;
+  country: string;
+}
+
 const mockUser = {
   name: 'Admin User',
   email: 'admin@example.com',
@@ -84,6 +91,12 @@ let privileges: Privilege[] = [
   { id: 'priv-1', name: 'View Dashboard', description: 'Can view dashboard data' },
   { id: 'priv-2', name: 'Manage Tenants', description: 'Can add, edit, and delete tenants' },
   { id: 'priv-3', name: 'Edit Users', description: 'Can edit user information' },
+];
+
+let legalEntities: LegalEntity[] = [
+  { id: 'le-1', name: 'Acme Holdings', type: 'Corporation', country: 'USA' },
+  { id: 'le-2', name: 'Globex Ltd', type: 'LLC', country: 'UK' },
+  { id: 'le-3', name: 'Umbrella Group', type: 'Partnership', country: 'Germany' },
 ];
 
 export function mockLogin({ email, password }: LoginRequest) {
@@ -281,6 +294,52 @@ export function mockDeletePrivilege(id: string) {
       const idx = privileges.findIndex((p) => p.id === id);
       if (idx === -1) return reject(new Error('Privilege not found'));
       privileges.splice(idx, 1);
+      resolve({ id });
+    }, 700);
+  });
+}
+
+export function mockGetLegalEntities() {
+  return new Promise<LegalEntity[]>((resolve) => {
+    setTimeout(() => {
+      resolve([...legalEntities]);
+    }, 500);
+  });
+}
+
+export function mockAddLegalEntity(data: Omit<LegalEntity, 'id'>) {
+  return new Promise<LegalEntity>((resolve) => {
+    setTimeout(() => {
+      const newEntity: LegalEntity = {
+        ...data,
+        id: `le-${Date.now()}`,
+      };
+      legalEntities.push(newEntity);
+      resolve(newEntity);
+    }, 700);
+  });
+}
+
+export function mockEditLegalEntity(id: string, data: Partial<Omit<LegalEntity, 'id'>>) {
+  return new Promise<LegalEntity>((resolve, reject) => {
+    setTimeout(() => {
+      const idx = legalEntities.findIndex((le) => le.id === id);
+      if (idx === -1) return reject(new Error('Legal Entity not found'));
+      legalEntities[idx] = {
+        ...legalEntities[idx],
+        ...data,
+      };
+      resolve(legalEntities[idx]);
+    }, 700);
+  });
+}
+
+export function mockDeleteLegalEntity(id: string) {
+  return new Promise<{ id: string }>((resolve, reject) => {
+    setTimeout(() => {
+      const idx = legalEntities.findIndex((le) => le.id === id);
+      if (idx === -1) return reject(new Error('Legal Entity not found'));
+      legalEntities.splice(idx, 1);
       resolve({ id });
     }, 700);
   });
