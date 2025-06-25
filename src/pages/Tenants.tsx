@@ -11,6 +11,7 @@ const Tenants: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     dispatch(fetchTenants());
@@ -32,6 +33,15 @@ const Tenants: React.FC = () => {
     }
   };
 
+  const filteredTenants = tenants.filter(
+    (tenant) =>
+      tenant.name.toLowerCase().includes(search.toLowerCase()) ||
+      tenant.email.toLowerCase().includes(search.toLowerCase()) ||
+      tenant.phone.toLowerCase().includes(search.toLowerCase()) ||
+      tenant.website.toLowerCase().includes(search.toLowerCase()) ||
+      tenant.industry.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -39,6 +49,15 @@ const Tenants: React.FC = () => {
         <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
           Add Tenant
         </Button>
+      </Box>
+      <Box mb={2}>
+        <input
+          type="text"
+          placeholder="Search by name, email, phone, website, or industry..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ padding: 8, width: 350, borderRadius: 4, border: '1px solid #ccc' }}
+        />
       </Box>
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}
@@ -55,7 +74,7 @@ const Tenants: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {tenants.map((tenant) => (
+          {filteredTenants.map((tenant) => (
             <tr key={tenant.id} style={{ borderBottom: '1px solid #eee' }}>
               <td>{tenant.name}</td>
               <td>{tenant.email}</td>
