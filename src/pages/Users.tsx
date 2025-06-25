@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { fetchUsers, deleteUser, editUser } from '../store/userSlice';
 import { Box, Typography, Button, CircularProgress, Alert } from '@mui/material';
+import AddUserDialog from '../components/molecules/AddUserDialog';
 
 const Users: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { users, loading, error } = useSelector((state: RootState) => state.users);
   const [editId, setEditId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
+  const [addOpen, setAddOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -32,7 +34,12 @@ const Users: React.FC = () => {
 
   return (
     <Box style={{ padding: 32 }}>
-      <Typography variant="h4" mb={2}>Users</Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Typography variant="h4">Users</Typography>
+        <Button variant="contained" color="primary" onClick={() => setAddOpen(true)}>
+          Add User
+        </Button>
+      </Box>
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}
       <table className="entity-table">
@@ -73,6 +80,7 @@ const Users: React.FC = () => {
           <Button variant="outlined" size="small" onClick={() => setEditId(null)}>Cancel</Button>
         </Box>
       )}
+      <AddUserDialog open={addOpen} onClose={() => setAddOpen(false)} />
     </Box>
   );
 };
