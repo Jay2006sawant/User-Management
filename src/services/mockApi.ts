@@ -21,6 +21,13 @@ export interface Tenant {
   updated_at: string;
 }
 
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
 const mockUser = {
   name: 'Admin User',
   email: 'admin@example.com',
@@ -47,6 +54,12 @@ let tenants: Tenant[] = [
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
+];
+
+let users: User[] = [
+  { id: 'user-1', name: 'Alice Smith', email: 'alice@example.com', role: 'Admin' },
+  { id: 'user-2', name: 'Bob Johnson', email: 'bob@example.com', role: 'User' },
+  { id: 'user-3', name: 'Charlie Lee', email: 'charlie@example.com', role: 'Manager' },
 ];
 
 export function mockLogin({ email, password }: LoginRequest) {
@@ -106,6 +119,52 @@ export function mockDeleteTenant(id: string) {
       const idx = tenants.findIndex((t) => t.id === id);
       if (idx === -1) return reject(new Error('Tenant not found'));
       tenants.splice(idx, 1);
+      resolve({ id });
+    }, 700);
+  });
+}
+
+export function mockGetUsers() {
+  return new Promise<User[]>((resolve) => {
+    setTimeout(() => {
+      resolve([...users]);
+    }, 500);
+  });
+}
+
+export function mockAddUser(data: Omit<User, 'id'>) {
+  return new Promise<User>((resolve) => {
+    setTimeout(() => {
+      const newUser: User = {
+        ...data,
+        id: `user-${Date.now()}`,
+      };
+      users.push(newUser);
+      resolve(newUser);
+    }, 700);
+  });
+}
+
+export function mockEditUser(id: string, data: Partial<Omit<User, 'id'>>) {
+  return new Promise<User>((resolve, reject) => {
+    setTimeout(() => {
+      const idx = users.findIndex((u) => u.id === id);
+      if (idx === -1) return reject(new Error('User not found'));
+      users[idx] = {
+        ...users[idx],
+        ...data,
+      };
+      resolve(users[idx]);
+    }, 700);
+  });
+}
+
+export function mockDeleteUser(id: string) {
+  return new Promise<{ id: string }>((resolve, reject) => {
+    setTimeout(() => {
+      const idx = users.findIndex((u) => u.id === id);
+      if (idx === -1) return reject(new Error('User not found'));
+      users.splice(idx, 1);
       resolve({ id });
     }, 700);
   });
