@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { fetchPrivileges, deletePrivilege, editPrivilege } from '../store/privilegeSlice';
 import { Box, Typography, Button, CircularProgress, Alert } from '@mui/material';
+import AddPrivilegeDialog from '../components/molecules/AddPrivilegeDialog';
 
 const Privileges: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { privileges, loading, error } = useSelector((state: RootState) => state.privileges);
   const [editId, setEditId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
+  const [addOpen, setAddOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchPrivileges());
@@ -32,7 +34,12 @@ const Privileges: React.FC = () => {
 
   return (
     <Box style={{ padding: 32 }}>
-      <Typography variant="h4" mb={2}>Privileges</Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Typography variant="h4">Privileges</Typography>
+        <Button variant="contained" color="primary" onClick={() => setAddOpen(true)}>
+          Add Privilege
+        </Button>
+      </Box>
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}
       <table className="entity-table">
@@ -71,6 +78,7 @@ const Privileges: React.FC = () => {
           <Button variant="outlined" size="small" onClick={() => setEditId(null)}>Cancel</Button>
         </Box>
       )}
+      <AddPrivilegeDialog open={addOpen} onClose={() => setAddOpen(false)} />
     </Box>
   );
 };
