@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { fetchRoles, deleteRole, editRole } from '../store/roleSlice';
 import { Box, Typography, Button, CircularProgress, Alert } from '@mui/material';
+import AddRoleDialog from '../components/molecules/AddRoleDialog';
 
 const Roles: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { roles, loading, error } = useSelector((state: RootState) => state.roles);
   const [editId, setEditId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
+  const [addOpen, setAddOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchRoles());
@@ -32,7 +34,12 @@ const Roles: React.FC = () => {
 
   return (
     <Box style={{ padding: 32 }}>
-      <Typography variant="h4" mb={2}>Roles</Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Typography variant="h4">Roles</Typography>
+        <Button variant="contained" color="primary" onClick={() => setAddOpen(true)}>
+          Add Role
+        </Button>
+      </Box>
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}
       <table className="entity-table">
@@ -71,6 +78,7 @@ const Roles: React.FC = () => {
           <Button variant="outlined" size="small" onClick={() => setEditId(null)}>Cancel</Button>
         </Box>
       )}
+      <AddRoleDialog open={addOpen} onClose={() => setAddOpen(false)} />
     </Box>
   );
 };
