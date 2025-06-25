@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { fetchLegalEntities, deleteLegalEntity, editLegalEntity } from '../store/legalEntitySlice';
 import { Box, Typography, Button, CircularProgress, Alert } from '@mui/material';
+import AddLegalEntityDialog from '../components/molecules/AddLegalEntityDialog';
 
 const LegalEntities: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { legalEntities, loading, error } = useSelector((state: RootState) => state.legalEntities);
   const [editId, setEditId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
+  const [addOpen, setAddOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchLegalEntities());
@@ -32,7 +34,12 @@ const LegalEntities: React.FC = () => {
 
   return (
     <Box style={{ padding: 32 }}>
-      <Typography variant="h4" mb={2}>Legal Entities</Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Typography variant="h4">Legal Entities</Typography>
+        <Button variant="contained" color="primary" onClick={() => setAddOpen(true)}>
+          Add Legal Entity
+        </Button>
+      </Box>
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}
       <table className="entity-table">
@@ -73,6 +80,7 @@ const LegalEntities: React.FC = () => {
           <Button variant="outlined" size="small" onClick={() => setEditId(null)}>Cancel</Button>
         </Box>
       )}
+      <AddLegalEntityDialog open={addOpen} onClose={() => setAddOpen(false)} />
     </Box>
   );
 };
