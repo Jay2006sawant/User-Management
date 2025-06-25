@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/Home.css';
 import AtomButton from '../components/atoms/Button';
 
 const Home: React.FC = () => (
@@ -19,20 +20,20 @@ const mockOrganizations = [
 const Organizations: React.FC = () => (
   <div style={{ padding: 32 }}>
     <h1>Organizations</h1>
-    <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 16 }}>
+    <table className="entity-table">
       <thead>
         <tr>
-          <th style={{ textAlign: 'left', padding: 8 }}>ID</th>
-          <th style={{ textAlign: 'left', padding: 8 }}>Name</th>
-          <th style={{ textAlign: 'left', padding: 8 }}>Email</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
         </tr>
       </thead>
       <tbody>
         {mockOrganizations.map((org) => (
-          <tr key={org.id} style={{ borderBottom: '1px solid #eee' }}>
-            <td style={{ padding: 8 }}>{org.id}</td>
-            <td style={{ padding: 8 }}>{org.name}</td>
-            <td style={{ padding: 8 }}>{org.email}</td>
+          <tr key={org.id}>
+            <td>{org.id}</td>
+            <td>{org.name}</td>
+            <td>{org.email}</td>
           </tr>
         ))}
       </tbody>

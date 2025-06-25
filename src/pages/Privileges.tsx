@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/Privileges.css';
 
 const mockPrivileges = [
   { id: 'priv-1', name: 'View Dashboard', description: 'Can view dashboard data' },
@@ -9,20 +10,20 @@ const mockPrivileges = [
 const Privileges: React.FC = () => (
   <div style={{ padding: 32 }}>
     <h1>Privileges</h1>
-    <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 16 }}>
+    <table className="entity-table">
       <thead>
         <tr>
-          <th style={{ textAlign: 'left', padding: 8 }}>ID</th>
-          <th style={{ textAlign: 'left', padding: 8 }}>Name</th>
-          <th style={{ textAlign: 'left', padding: 8 }}>Description</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
         </tr>
       </thead>
       <tbody>
         {mockPrivileges.map((priv) => (
-          <tr key={priv.id} style={{ borderBottom: '1px solid #eee' }}>
-            <td style={{ padding: 8 }}>{priv.id}</td>
-            <td style={{ padding: 8 }}>{priv.name}</td>
-            <td style={{ padding: 8 }}>{priv.description}</td>
+          <tr key={priv.id}>
+            <td>{priv.id}</td>
+            <td>{priv.name}</td>
+            <td>{priv.description}</td>
           </tr>
         ))}
       </tbody>

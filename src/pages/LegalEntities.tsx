@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/LegalEntities.css';
 
 const mockLegalEntities = [
   { id: 'le-1', name: 'Acme Holdings', type: 'Corporation', country: 'USA' },
@@ -9,22 +10,22 @@ const mockLegalEntities = [
 const LegalEntities: React.FC = () => (
   <div style={{ padding: 32 }}>
     <h1>Legal Entities</h1>
-    <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 16 }}>
+    <table className="entity-table">
       <thead>
         <tr>
-          <th style={{ textAlign: 'left', padding: 8 }}>ID</th>
-          <th style={{ textAlign: 'left', padding: 8 }}>Name</th>
-          <th style={{ textAlign: 'left', padding: 8 }}>Type</th>
-          <th style={{ textAlign: 'left', padding: 8 }}>Country</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Country</th>
         </tr>
       </thead>
       <tbody>
         {mockLegalEntities.map((le) => (
-          <tr key={le.id} style={{ borderBottom: '1px solid #eee' }}>
-            <td style={{ padding: 8 }}>{le.id}</td>
-            <td style={{ padding: 8 }}>{le.name}</td>
-            <td style={{ padding: 8 }}>{le.type}</td>
-            <td style={{ padding: 8 }}>{le.country}</td>
+          <tr key={le.id}>
+            <td>{le.id}</td>
+            <td>{le.name}</td>
+            <td>{le.type}</td>
+            <td>{le.country}</td>
           </tr>
         ))}
       </tbody>

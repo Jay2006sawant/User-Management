@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/Users.css';
 
 const mockUsers = [
   { id: 'user-1', name: 'Alice Smith', email: 'alice@example.com', role: 'Admin' },
@@ -9,22 +10,22 @@ const mockUsers = [
 const Users: React.FC = () => (
   <div style={{ padding: 32 }}>
     <h1>Users</h1>
-    <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 16 }}>
+    <table className="entity-table">
       <thead>
         <tr>
-          <th style={{ textAlign: 'left', padding: 8 }}>ID</th>
-          <th style={{ textAlign: 'left', padding: 8 }}>Name</th>
-          <th style={{ textAlign: 'left', padding: 8 }}>Email</th>
-          <th style={{ textAlign: 'left', padding: 8 }}>Role</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
         </tr>
       </thead>
       <tbody>
         {mockUsers.map((user) => (
-          <tr key={user.id} style={{ borderBottom: '1px solid #eee' }}>
-            <td style={{ padding: 8 }}>{user.id}</td>
-            <td style={{ padding: 8 }}>{user.name}</td>
-            <td style={{ padding: 8 }}>{user.email}</td>
-            <td style={{ padding: 8 }}>{user.role}</td>
+          <tr key={user.id}>
+            <td>{user.id}</td>
+            <td>{user.name}</td>
+            <td>{user.email}</td>
+            <td>{user.role}</td>
           </tr>
         ))}
       </tbody>
