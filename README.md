@@ -19,6 +19,24 @@ A modern, multi-tenant user management platform built with React, TypeScript, Vi
 - Responsive, modern UI
 - Mock API integration
 
+## Project Structure
+
+```
+User-Management/
+  src/
+    pages/           # All main page components (Users, Roles, Tenants, etc.)
+    styles/          # Centralized CSS files for entity tables and pages
+    components/      # Reusable UI components (atoms, molecules, organisms, templates)
+    store/           # Redux slices and store setup
+    services/        # Mock API and service logic
+    hooks/           # Custom React hooks
+    assets/          # Static assets (images, icons, etc.)
+```
+
+- **All entity table styles** (Users, Roles, Privileges, Legal Entities, Organizations) are now in `src/styles/` for maintainability and consistency.
+- **Page components** import their CSS from the `styles/` folder (e.g., `import '../styles/Users.css'`).
+- **Mock data** is used for all entity tables. CRUD actions are not yet fully implemented (only Add Tenant is functional as a mock).
+
 ## Code Style
 - [Airbnb React Style Guide](https://github.com/airbnb/javascript/tree/master/react)
 - [Prettier](https://prettier.io/)
