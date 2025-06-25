@@ -13,6 +13,7 @@ import Users from './pages/Users';
 import Roles from './pages/Roles';
 import Organizations from './pages/Home';
 import Privileges from './pages/Privileges';
+import LegalEntities from './pages/LegalEntities';
 
 
 const theme = createTheme();
@@ -94,7 +95,7 @@ const App: React.FC = () => (
             element={
               <ProtectedRoute>
                 <MainLayout>
-                  <div>Legal Entities Page (Coming Soon)</div>
+                  <LegalEntities />
                 </MainLayout>
               </ProtectedRoute>
             }
