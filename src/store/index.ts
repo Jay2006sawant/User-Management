@@ -5,6 +5,7 @@ import userReducer from './userSlice';
 import roleReducer from './roleSlice';
 import privilegeReducer from './privilegeSlice';
 import legalEntityReducer from './legalEntitySlice';
+import { loadAuthFromStorage } from './authSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,9 @@ const store = configureStore({
     roles: roleReducer,
     privileges: privilegeReducer,
     legalEntities: legalEntityReducer,
+  },
+  preloadedState: {
+    auth: loadAuthFromStorage(),
   },
 });
 

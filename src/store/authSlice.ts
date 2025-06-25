@@ -23,6 +23,31 @@ const initialState: AuthState = {
   error: null,
 };
 
+const AUTH_STORAGE_KEY = 'um_auth';
+
+function saveAuthToStorage(auth: { token: string | null; user: UserProfile | null }) {
+  if (auth.token && auth.user) {
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(auth));
+  } else {
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+  }
+}
+
+export function loadAuthFromStorage(): AuthState {
+  const raw = localStorage.getItem(AUTH_STORAGE_KEY);
+  if (!raw) return initialState;
+  try {
+    const parsed = JSON.parse(raw);
+    return {
+      ...initialState,
+      token: parsed.token,
+      user: parsed.user,
+    };
+  } catch {
+    return initialState;
+  }
+}
+
 export const login = createAsyncThunk(
   'auth/login',
   async (data: { email: string; password: string }, { rejectWithValue }) => {
@@ -43,6 +68,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.error = null;
+      saveAuthToStorage({ token: null, user: null });
     },
   },
   extraReducers: (builder) => {
@@ -55,6 +81,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
+        saveAuthToStorage({ token: action.payload.token, user: action.payload.user });
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
