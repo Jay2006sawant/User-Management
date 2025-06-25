@@ -11,6 +11,7 @@ const Roles: React.FC = () => {
   const [editId, setEditId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
   const [addOpen, setAddOpen] = useState(false);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     dispatch(fetchRoles());
@@ -32,6 +33,12 @@ const Roles: React.FC = () => {
     }
   };
 
+  const filteredRoles = roles.filter(
+    (role) =>
+      role.name.toLowerCase().includes(search.toLowerCase()) ||
+      role.description.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <Box style={{ padding: 32 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -39,6 +46,15 @@ const Roles: React.FC = () => {
         <Button variant="contained" color="primary" onClick={() => setAddOpen(true)}>
           Add Role
         </Button>
+      </Box>
+      <Box mb={2}>
+        <input
+          type="text"
+          placeholder="Search by name or description..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ padding: 8, width: 300, borderRadius: 4, border: '1px solid #ccc' }}
+        />
       </Box>
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}
@@ -52,7 +68,7 @@ const Roles: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {roles.map((role) => (
+          {filteredRoles.map((role) => (
             <tr key={role.id}>
               <td>{role.id}</td>
               <td>{role.name}</td>
