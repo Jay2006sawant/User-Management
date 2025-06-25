@@ -83,4 +83,30 @@ export function mockAddTenant(data: Omit<Tenant, 'id' | 'created_at' | 'updated_
       resolve(newTenant);
     }, 700);
   });
+}
+
+export function mockEditTenant(id: string, data: Partial<Omit<Tenant, 'id' | 'created_at' | 'updated_at'>>) {
+  return new Promise<Tenant>((resolve, reject) => {
+    setTimeout(() => {
+      const idx = tenants.findIndex((t) => t.id === id);
+      if (idx === -1) return reject(new Error('Tenant not found'));
+      tenants[idx] = {
+        ...tenants[idx],
+        ...data,
+        updated_at: new Date().toISOString(),
+      };
+      resolve(tenants[idx]);
+    }, 700);
+  });
+}
+
+export function mockDeleteTenant(id: string) {
+  return new Promise<{ id: string }>((resolve, reject) => {
+    setTimeout(() => {
+      const idx = tenants.findIndex((t) => t.id === id);
+      if (idx === -1) return reject(new Error('Tenant not found'));
+      tenants.splice(idx, 1);
+      resolve({ id });
+    }, 700);
+  });
 } 
