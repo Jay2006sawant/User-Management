@@ -34,6 +34,12 @@ export interface Role {
   description: string;
 }
 
+export interface Privilege {
+  id: string;
+  name: string;
+  description: string;
+}
+
 const mockUser = {
   name: 'Admin User',
   email: 'admin@example.com',
@@ -72,6 +78,12 @@ let roles: Role[] = [
   { id: 'role-1', name: 'Admin', description: 'Full access to all features' },
   { id: 'role-2', name: 'User', description: 'Standard user access' },
   { id: 'role-3', name: 'Manager', description: 'Manage users and tenants' },
+];
+
+let privileges: Privilege[] = [
+  { id: 'priv-1', name: 'View Dashboard', description: 'Can view dashboard data' },
+  { id: 'priv-2', name: 'Manage Tenants', description: 'Can add, edit, and delete tenants' },
+  { id: 'priv-3', name: 'Edit Users', description: 'Can edit user information' },
 ];
 
 export function mockLogin({ email, password }: LoginRequest) {
@@ -223,6 +235,52 @@ export function mockDeleteRole(id: string) {
       const idx = roles.findIndex((r) => r.id === id);
       if (idx === -1) return reject(new Error('Role not found'));
       roles.splice(idx, 1);
+      resolve({ id });
+    }, 700);
+  });
+}
+
+export function mockGetPrivileges() {
+  return new Promise<Privilege[]>((resolve) => {
+    setTimeout(() => {
+      resolve([...privileges]);
+    }, 500);
+  });
+}
+
+export function mockAddPrivilege(data: Omit<Privilege, 'id'>) {
+  return new Promise<Privilege>((resolve) => {
+    setTimeout(() => {
+      const newPrivilege: Privilege = {
+        ...data,
+        id: `priv-${Date.now()}`,
+      };
+      privileges.push(newPrivilege);
+      resolve(newPrivilege);
+    }, 700);
+  });
+}
+
+export function mockEditPrivilege(id: string, data: Partial<Omit<Privilege, 'id'>>) {
+  return new Promise<Privilege>((resolve, reject) => {
+    setTimeout(() => {
+      const idx = privileges.findIndex((p) => p.id === id);
+      if (idx === -1) return reject(new Error('Privilege not found'));
+      privileges[idx] = {
+        ...privileges[idx],
+        ...data,
+      };
+      resolve(privileges[idx]);
+    }, 700);
+  });
+}
+
+export function mockDeletePrivilege(id: string) {
+  return new Promise<{ id: string }>((resolve, reject) => {
+    setTimeout(() => {
+      const idx = privileges.findIndex((p) => p.id === id);
+      if (idx === -1) return reject(new Error('Privilege not found'));
+      privileges.splice(idx, 1);
       resolve({ id });
     }, 700);
   });
