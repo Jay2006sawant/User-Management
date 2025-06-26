@@ -11,6 +11,7 @@ const Privileges: React.FC = () => {
   const [editId, setEditId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
   const [addOpen, setAddOpen] = useState(false);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     dispatch(fetchPrivileges());
@@ -32,6 +33,12 @@ const Privileges: React.FC = () => {
     }
   };
 
+  const filteredPrivileges = privileges.filter(
+    (priv) =>
+      priv.name.toLowerCase().includes(search.toLowerCase()) ||
+      priv.description.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <Box style={{ padding: 32 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -39,6 +46,15 @@ const Privileges: React.FC = () => {
         <Button variant="contained" color="primary" onClick={() => setAddOpen(true)}>
           Add Privilege
         </Button>
+      </Box>
+      <Box mb={2}>
+        <input
+          type="text"
+          placeholder="Search by name or description..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ padding: 8, width: 300, borderRadius: 4, border: '1px solid #ccc' }}
+        />
       </Box>
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}
@@ -52,7 +68,7 @@ const Privileges: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {privileges.map((priv) => (
+          {filteredPrivileges.map((priv) => (
             <tr key={priv.id}>
               <td>{priv.id}</td>
               <td>{priv.name}</td>
