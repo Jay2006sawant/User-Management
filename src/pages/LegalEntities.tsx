@@ -11,6 +11,7 @@ const LegalEntities: React.FC = () => {
   const [editId, setEditId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
   const [addOpen, setAddOpen] = useState(false);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     dispatch(fetchLegalEntities());
@@ -32,6 +33,13 @@ const LegalEntities: React.FC = () => {
     }
   };
 
+  const filteredLegalEntities = legalEntities.filter(
+    (le) =>
+      le.name.toLowerCase().includes(search.toLowerCase()) ||
+      le.type.toLowerCase().includes(search.toLowerCase()) ||
+      le.country.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <Box style={{ padding: 32 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -39,6 +47,15 @@ const LegalEntities: React.FC = () => {
         <Button variant="contained" color="primary" onClick={() => setAddOpen(true)}>
           Add Legal Entity
         </Button>
+      </Box>
+      <Box mb={2}>
+        <input
+          type="text"
+          placeholder="Search by name, type, or country..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ padding: 8, width: 300, borderRadius: 4, border: '1px solid #ccc' }}
+        />
       </Box>
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}
@@ -53,7 +70,7 @@ const LegalEntities: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {legalEntities.map((le) => (
+          {filteredLegalEntities.map((le) => (
             <tr key={le.id}>
               <td>{le.id}</td>
               <td>{le.name}</td>
